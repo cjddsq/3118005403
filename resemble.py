@@ -27,3 +27,32 @@ def resemble_cal(all_key,article1_dic,article2_dic):
     cos = float(vector_multi)/(str1_mod*str2_mod)
     return cos
     return return_dic
+
+
+'''
+文章关键词提取
+'''
+def analyse_word(content):
+    # 新建两个数组
+    zidian={}
+    return_dic={}
+    # 内容分词
+    fenci = jieba.cut_for_search(content)
+    for fc in fenci:
+        if fc in zidian:
+            zidian[fc] += 1
+        else:
+            zidian[fc] = 1
+    # 关键字的个数
+    topK=100
+    # 关键词  比率
+    tfidf = jieba.analyse.extract_tags(content, topK=topK, withWeight=True)
+    artice = open('C:/Users/Administrator.USER-20190905VU/Desktop/test/stop_word.txt', 'r', encoding='utf-8').read()
+    # 要转换成字符串
+    stopkeyword = [content.strip(str(artice))]
+    for word_weight in tfidf:
+        if word_weight in stopkeyword:
+            continue
+        frequence = zidian.get(word_weight[0], 'not found')
+        return_dic[word_weight[0]]=frequence
+    return return_dic
