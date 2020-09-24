@@ -56,3 +56,26 @@ def analyse_word(content):
         frequence = zidian.get(word_weight[0], 'not found')
         return_dic[word_weight[0]]=frequence
     return return_dic
+
+
+
+# set是把重复的去掉
+all_key=set()
+f = open('C:/Users/Administrator.USER-20190905VU/Desktop/test/orig.txt', 'r', encoding='utf-8')
+lines = f.readlines()
+lines = "".join(lines)
+# print(lines)
+article1_dic = analyse_word(lines)
+print(article1_dic)
+for k,v in article1_dic.items():
+        all_key.add(k)
+g = open('C:/Users/Administrator.USER-20190905VU/Desktop/test/orig_ 0.8_ del_10.txt', 'r', encoding='utf-8')
+lines1 = g.readlines()
+lines1 = "".join(lines1)
+# print(lines1)
+article2_dic = analyse_word(lines1)
+print(article2_dic)
+for k,v in article2_dic.items():
+        all_key.add(k)
+cos = resemble_cal(all_key,article1_dic,article2_dic)
+print(cos)
