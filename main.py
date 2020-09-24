@@ -3,6 +3,7 @@ from functools import reduce
 import jieba
 import jieba.analyse
 import math
+import sys
 
 
 def resemble_cal(all_key, article1_dic, article2_dic):
@@ -94,7 +95,7 @@ def main():
     all_key = set()
     # 打开文件
     f = open(
-        'C:/Users/Administrator.USER-20190905VU/Desktop/3118005403/requirements/orig.txt',
+        sys.argv[1],
         'r',
         encoding='utf-8')
     lines = f.readlines()
@@ -109,7 +110,7 @@ def main():
     for k, v in article1_dic.items():
         all_key.add(k)
     g = open(
-        'C:/Users/Administrator.USER-20190905VU/Desktop/3118005403/requirements/orig_0.8_dis_10.txt',
+        sys.argv[2],
         'r',
         encoding='utf-8')
     lines1 = g.readlines()
@@ -121,8 +122,14 @@ def main():
         all_key.add(k)
         # 进行计算
     cos = resemble_cal(all_key, article1_dic, article2_dic)
-    cos = result(cos)
-    print('两篇文章的相似度:', cos)
+    cosfinal = result(cos)
+    # output = input('请输入答案文件的地址：')
+    with open(sys.argv[3], 'w') as file:
+        file.write(str(cosfinal))
+    file.close()
+    print('两篇文章的相似度:', cosfinal)
+    
+    
 
 
 if __name__ == "__main__":
