@@ -65,10 +65,14 @@ def analyse_word(content):
     # 关键字的个数
     topK = 100
     tfidf = jieba.analyse.extract_tags(content, topK=topK, withWeight=True)
-    artice = open(
-        'C:/Users/Administrator.USER-20190905VU/Desktop/3118005403/requirements/stop_word.txt',
-        'r',
-        encoding='utf-8').read()
+    try:
+        artice = open(
+            'C:/Users/Administrator.USER-20190905VU/Desktop/3118005403/requirements/stop_word.txt',
+            'r',
+            encoding='utf-8').read()
+    except FileNotFoundError:
+        msg = "请输入正确的文件路径"
+        print(msg)
     # 要转换成字符串
     # strip() 方法用于移除字符串头尾指定的字符（默认为空格或换行符）或字符序列
     # 移除停用库里面的词
@@ -94,29 +98,37 @@ def main():
     # set是把重复的去掉
     all_key = set()
     # 打开文件
-    f = open(
-        sys.argv[1],
-        'r',
-        encoding='utf-8')
-    lines = f.readlines()
-    # join()是一个字符串方法，它返回被子字符串连接的字符串。
-    lines = "".join(lines)
-    # print(lines)
-    # 得到关键字典
-    article1_dic = analyse_word(lines)
+    try:
+        f = open(
+            sys.argv[1],
+            'r',
+            encoding='utf-8')
+        lines = f.readlines()
+        # join()是一个字符串方法，它返回被子字符串连接的字符串。
+        lines = "".join(lines)
+        # print(lines)
+        # 得到关键字典
+        article1_dic = analyse_word(lines)
+    except FileNotFoundError:
+        msg = "请输入正确的文件路径"
+        print(msg)
     print('第一篇文章的关键字和词频', article1_dic)
     # 如果kv在字典中则添加到all_key中
     # for循环中k和v都是变量，分别遍历了key，value
     for k, v in article1_dic.items():
         all_key.add(k)
-    g = open(
-        sys.argv[2],
-        'r',
-        encoding='utf-8')
-    lines1 = g.readlines()
-    lines1 = "".join(lines1)
-    # print(lines1)
-    article2_dic = analyse_word(lines1)
+    try:
+        g = open(
+            sys.argv[2],
+            'r',
+            encoding='utf-8')
+        lines1 = g.readlines()
+        lines1 = "".join(lines1)
+        # print(lines1)
+        article2_dic = analyse_word(lines1)
+    except FileNotFoundError:
+        msg = "请输入正确的文件路径"
+        print(msg)
     print('第二篇文章的关键字和词频', article2_dic)
     for k, v in article2_dic.items():
         all_key.add(k)
